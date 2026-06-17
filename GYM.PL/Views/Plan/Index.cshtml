@@ -1,5 +1,5 @@
 ﻿@using GYM.DAL.Data.Models
-@model IEnumerable<Plan>
+@model IEnumerable<PlanView>
 
 
 <div class="container">
@@ -49,7 +49,7 @@
                                             </a>
 
                                             <div class="d-flex gap-2">
-                                                <a href="\Plans\Edit\1" class="btn btn-outline btn-sm flex-fill">
+                                                <a asp-action="Edit" asp-controller="Plan" asp-route-id=@plan.Id class ="btn btn-outline btn-sm flex-fill">
                                                     <i class="bi bi-pencil me-1"></i>Edit
                                                 </a>
                                                 <form href="\Plans\Activate\1" method="post" class="flex-fill">
