@@ -1,8 +1,9 @@
-using GYM.BLL.Repositories.ImplementionsRepositoies;
-using GYM.BLL.Repositories.Interfaces;
+using GYM.BLL.Services.Classes;
+using GYM.BLL.Services.Interfaces;
 using GYM.DAL.Data.GymDbContext;
+using GYM.DAL.Repositories.Classes;
+using GYM.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +15,16 @@ builder.Services.AddDbContext<GYMDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-builder.Services.AddScoped<IPlanRepository, planRepository>();
+//builder.Services.AddScoped<IPlanRepository, planRepository>();
 //builder.Services.AddTransient<IPlanRepository, planRepository> as  new object  foreach  operations.
 //builder.Services.AddSingleton object  share all  requests . 
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericeRepository<>));
+//builder.Services.AddScoped<IPlanRepository<Plan>, PlanRepository<Plan>>();
+//builder.Services.AddScoped<IMemberRepository<Member>, MemberRepository<Member>>();
+builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IPlanServices, PlanService>();
+//builder.Services.AddScoped<ITrainerRepository<Trainer>, TrainerRepository<Trainer>>();
+builder.Services.AddScoped<ITrainerService, TrainerService>();
 
 
 var app = builder.Build();
