@@ -23,7 +23,8 @@ namespace GYM.PL.Controllers
         public async Task<IActionResult> Create(CancellationToken ct) => View(new CreateTrainerViewModel());
 
         [HttpPost]
-        public async Task<IActionResult> CreateTrainer(CreateTrainerViewModel createTrainerViewModel, CancellationToken ct)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateTrainerViewModel createTrainerViewModel, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +59,8 @@ namespace GYM.PL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditConfirmed(EditTrainerViewModel updatetrainer, CancellationToken ct)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditTrainerViewModel updatetrainer, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
