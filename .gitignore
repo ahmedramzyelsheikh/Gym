@@ -4,3 +4,5 @@ obj/
 wwwroot/lib/
 *.user
 *.suo
+config.bat
+node_modules

@@ -6,24 +6,32 @@ namespace GYM.Controllers
 {
     public class PlanController : Controller
     {
-        private readonly IPlanServices planServices;
+        private readonly IPlanServices _planServices;
+
         public PlanController(IPlanServices planServices)
         {
-            this.planServices = planServices; 
+            _planServices = planServices; 
         }
-        public  async Task<IActionResult> Index(CancellationToken ct) => View(await planServices.GetPlansAsync(ct : ct));
 
-        public async Task<IActionResult> Details(int id , CancellationToken ct) => View(await planServices.GetPlan(id , ct : ct));
-        
-        
-        [HttpGet]         
-        public  async  Task<IActionResult> Edit(int id  ,  CancellationToken ct )
+        public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var result  =  await planServices.GetPlan(id, ct: ct);
+            var result = await _planServices.GetPlansAsync(ct);
+            return View(result.Data);
+        }
 
-            if(result is null) return RedirectToAction("Index");
+        public async Task<IActionResult> Details(int id, CancellationToken ct)
+        {
+            var result = await _planServices.GetPlan(id, ct);
+            if (!result.IsSuccess) return RedirectToAction("Index");
+            return View(result.Data);
+        }
 
-            return View(result); 
+        [HttpGet]         
+        public async Task<IActionResult> Edit(int id, CancellationToken ct)
+        {
+            var result = await _planServices.GetPlan(id, ct);
+            if (!result.IsSuccess) return RedirectToAction("Index");
+            return View(result.Data); 
         }
 
         [HttpPost]
@@ -31,8 +39,9 @@ namespace GYM.Controllers
         {
             if (ModelState.IsValid)
             {
-                await planServices.UpdateViewCreated(plan, ct);
-                return RedirectToAction("Index");
+                var result = await _planServices.UpdateViewCreated(plan, ct);
+                if (result.IsSuccess) return RedirectToAction("Index");
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
             return View(plan);
         }
@@ -45,8 +54,9 @@ namespace GYM.Controllers
         {
             if (ModelState.IsValid)
             {
-                await planServices.CreatePlan(plan, ct);
-                return RedirectToAction("Index");
+                var result = await _planServices.CreatePlan(plan, ct);
+                if (result.IsSuccess) return RedirectToAction("Index");
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
             return View(plan);
         }
@@ -56,7 +66,7 @@ namespace GYM.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
         {
-            await planServices.DeletePlan(id, ct);
+            await _planServices.DeletePlan(id, ct);
             return RedirectToAction("Index");
         }
     }

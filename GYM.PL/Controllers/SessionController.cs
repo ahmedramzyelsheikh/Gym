@@ -2,6 +2,7 @@ using GYM.BLL.Services.Interfaces;
 using GYM.BLL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,15 +19,15 @@ namespace GYM.PL.Controllers
 
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var sessions = await _sessionService.GetAllSessionsAsync(ct);
-            return View(sessions);
+            var result = await _sessionService.GetAllSessionsAsync(ct);
+            return View(result.Data);
         }
 
         public async Task<IActionResult> Details(int id, CancellationToken ct)
         {
-            var session = await _sessionService.GetSessionDetailsAsync(id, ct);
-            if (session == null) return NotFound();
-            return View(session);
+            var result = await _sessionService.GetSessionDetailsAsync(id, ct);
+            if (!result.IsSuccess) return NotFound();
+            return View(result.Data);
         }
 
         [HttpGet]
@@ -37,18 +38,18 @@ namespace GYM.PL.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      
         public async Task<IActionResult> Create(CreateSessionViewModel model, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
                 var result = await _sessionService.CreateSessionAsync(model, ct);
-                if (result > 0)
+                if (result.IsSuccess)
                 {
                     TempData["SuccessMessage"] = "Session created successfully!";
                     return RedirectToAction(nameof(Index));
                 }
-                TempData["ErrorMessage"] = "Failed to create session.";
+                TempData["ErrorMessage"] = result.ErrorMessage;
             }
             await PopulateDropDownsAsync(ct);
             return View(model);
@@ -57,22 +58,26 @@ namespace GYM.PL.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id, CancellationToken ct)
         {
-            var model = await _sessionService.GetSessionToEditAsync(id, ct);
-            if (model == null) return NotFound();
+            var result = await _sessionService.GetSessionToEditAsync(id, ct);
+            if (!result.IsSuccess) return NotFound();
 
             await PopulateDropDownsAsync(ct);
-            return View(model);
+            return View(result.Data);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Edit(UpdateSessionViewModel model, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
-                await _sessionService.UpdateSessionAsync(model, ct);
-                TempData["SuccessMessage"] = "Session updated successfully!";
-                return RedirectToAction(nameof(Index));
+                var result = await _sessionService.UpdateSessionAsync(model, ct);
+                if (result.IsSuccess)
+                {
+                    TempData["SuccessMessage"] = "Session updated successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+                TempData["ErrorMessage"] = result.ErrorMessage;
             }
             await PopulateDropDownsAsync(ct);
             return View(model);
@@ -81,27 +86,36 @@ namespace GYM.PL.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id, CancellationToken ct)
         {
-            var session = await _sessionService.GetSessionDetailsAsync(id, ct);
-            if (session == null) return NotFound();
-            return View(session);
+            var result = await _sessionService.GetSessionDetailsAsync(id, ct);
+            if (!result.IsSuccess) return NotFound();
+            return View(result.Data);
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+    
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
         {
-            await _sessionService.DeleteSessionAsync(id, ct);
-            TempData["SuccessMessage"] = "Session deleted successfully!";
+            var result = await _sessionService.DeleteSessionAsync(id, ct);
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = "Session deleted successfully!";
+            }
             return RedirectToAction(nameof(Index));
         }
 
         private async Task PopulateDropDownsAsync(CancellationToken ct)
         {
-            var categories = await _sessionService.GetCategoriesAsync(ct);
-            ViewBag.Categories = new SelectList(categories.Select(c => new { c.Id, c.Name }), "Id", "Name");
+            var categoriesResult = await _sessionService.GetCategoriesAsync(ct);
+            if (categoriesResult.IsSuccess)
+            {
+                ViewBag.Categories = new SelectList(categoriesResult.Data.Select(c => new { c.Id, c.Name }), "Id", "Name");
+            }
 
-            var trainers = await _sessionService.GetTrainersAsync(ct);
-            ViewBag.Trainers = new SelectList(trainers.Select(t => new { t.Id, t.Name }), "Id", "Name");
+            var trainersResult = await _sessionService.GetTrainersAsync(ct);
+            if (trainersResult.IsSuccess)
+            {
+                ViewBag.Trainers = new SelectList(trainersResult.Data.Select(t => new { t.Id, t.Name }), "Id", "Name");
+            }
         }
     }
 }
