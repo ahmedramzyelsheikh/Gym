@@ -1,9 +1,7 @@
-@using GYM.DAL.Data.Enums
-@using GYM.PL.Controllers
 @model EditTrainerViewModel
 @{
     ViewData["Title"] = "Edit Trainer";
-   // Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container mt-4">
@@ -21,7 +19,6 @@
                         <h4 class="mb-0 text-black">@Model.Name</h4>
                     </div>
                     <form asp-action="Edit" method="post">
-                        <input hidden asp-for="Id" />
                         <input hidden asp-for="Name" />
                         <!-- Personal Information -->
                         <div class="section-header mb-3">
@@ -30,22 +27,6 @@
                         </div>
                         <div class="row g-3 mb-4">
 
-                            <!-- Locked Fields -->
-                            <div class="col-md-6">
-                                <label asp-for="DateOfBirth" class="form-label fw-semibold text-muted">
-                                    Date Of Birth <i class="bi bi-lock-fill small" title="Display Only"></i>
-                                </label>
-                                <input asp-for="DateOfBirth" type="date" class="form-control bg-light text-muted" readonly tabindex="-1" />
-                            </div>
-
-                            <div class="col-md-6">
-                                <label asp-for="Gender" class="form-label fw-semibold text-muted">
-                                    Gender <i class="bi bi-lock-fill small" title="Display Only"></i>
-                                </label>
-                                <input hidden asp-for="Gender" />
-                                <input type="text" class="form-control bg-light text-muted" value="@Model.Gender.ToString()" readonly tabindex="-1" />
-                            </div>
-                            <!-- End Locked Fields -->
 
                             <div class="col-md-6">
                                 <label asp-for="Email" class="form-label fw-semibold">
@@ -94,11 +75,11 @@
                         <div class="row g-3">
 
                             <div class="col-12 col-md-6">
-                                <label asp-for="Specialtiy" class="form-label"></label>
-                                <select asp-for="Specialtiy" asp-items="Html.GetEnumSelectList<Specialties>()" class="form-select">
+                                <label asp-for="Specialties" class="form-label"></label>
+                                <select asp-for="Specialties" asp-items="Html.GetEnumSelectList<Specialties>()" class="form-select">
                                     <option value="">-- Select Specialist --</option>
                                 </select>
-                                <span asp-validation-for="Specialtiy" class="text-danger"></span>
+                                <span asp-validation-for="Specialties" class="text-danger"></span>
                             </div>
                         </div>
 

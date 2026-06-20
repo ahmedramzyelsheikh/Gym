@@ -1,14 +1,26 @@
+using GYM.BLL.ViewModels;
 using GYM.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using GYM.BLL.Services.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GYM.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IAnalyticsService _analyticsService;
+
+        public HomeController(IAnalyticsService analyticsService)
         {
-            return View();
+            _analyticsService = analyticsService;
+        }
+
+        public async Task<IActionResult> Index(CancellationToken ct)
+        {
+            var model = await _analyticsService.GetDashboardAnalyticsAsync(ct);
+            return View(model);
         }
 
         public IActionResult Privacy()

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<TrainerView>
+@model IEnumerable<TrainerView>
 @{
     ViewData["Title"] = "Trainers";
-    // Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @if (TempData["SuccessMessage"] != null)
@@ -55,7 +55,7 @@ else if (TempData["ErrorMessage"] != null)
                             <td><span>@trainer.Email</span></td>
                             <td><span>@trainer.Phone</span></td>
                             <td>
-                                <span class="badge bg-primary-color">@trainer.Specialtiy</span>
+                                <span class="badge bg-primary-color">@trainer.Specialties</span>
                             </td>
                             <td class="action position-relative">
                                 <div class="dropdown">
@@ -102,6 +102,6 @@ else if (TempData["ErrorMessage"] != null)
     }
 </div>
 
-@* @section Scripts {
+@section Scripts {
     <partial name="_AlertBoxScript.cshtml" />
-} *@
+}

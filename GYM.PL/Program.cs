@@ -21,10 +21,13 @@ builder.Services.AddDbContext<GYMDbContext>(options =>
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericeRepository<>));
 //builder.Services.AddScoped<IPlanRepository<Plan>, PlanRepository<Plan>>();
 //builder.Services.AddScoped<IMemberRepository<Member>, MemberRepository<Member>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IPlanServices, PlanService>();
 //builder.Services.AddScoped<ITrainerRepository<Trainer>, TrainerRepository<Trainer>>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
+builder.Services.AddScoped<ISessionService, SessionService>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 
 
 var app = builder.Build();

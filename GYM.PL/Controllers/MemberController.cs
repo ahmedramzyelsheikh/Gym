@@ -41,6 +41,21 @@ namespace GYM.PL.Controllers
             return View(result);
         }
 
+        public async Task<IActionResult> HealthRecordDetails(int id, CancellationToken ct)
+        {
+            var result = await _member.GetDetailsHealthRecord(id, ct);
+            if (result is null) 
+            {
+                result = new HealthRecordViewModel { Note = "No Health Record Found." };
+            }
+
+           
+            TempData["Message"] = "Successfully loaded Health Record for the member.";
+            ViewBag.Status = "Active";
+
+            return View(result);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id, CancellationToken ct)
         {
