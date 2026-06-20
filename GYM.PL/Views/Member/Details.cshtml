@@ -12,7 +12,7 @@
                 <div class="text-center mt-3">
                     @if (!string.IsNullOrEmpty(Model.Photo))
                     {
-                        <img src="@Url.Action("Picture", "Member", new { id = Model.Id })"
+                        <img src="~/Files/Images/Members/@Model.Photo"
                              alt="@Model.Name"
                              class="rounded-circle"
                              style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #fff; margin-top: -60px;" />
