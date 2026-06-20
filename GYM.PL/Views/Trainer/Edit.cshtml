@@ -18,8 +18,27 @@
                         <small class="text-muted d-block mb-1">Editing Profile For</small>
                         <h4 class="mb-0 text-black">@Model.Name</h4>
                     </div>
-                    <form asp-action="Edit" method="post">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <input hidden asp-for="Id" />
                         <input hidden asp-for="Name" />
+                        <input hidden asp-for="Photo" />
+                        
+                        <!-- Photo Upload -->
+                        <div class="mb-4 text-center">
+                            @if (!string.IsNullOrEmpty(Model.Photo))
+                            {
+                                <img id="photoPreview" src="~/Files/Images/Trainers/@Model.Photo" alt="Profile Photo" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <img id="photoPreview" src="~/images/default-avatar.png" alt="Profile Photo" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" />
+                            }
+                            <div>
+                                <label asp-for="PhotoFile" class="form-label">Change Photo</label>
+                                <input asp-for="PhotoFile" type="file" class="form-control" accept="image/*" id="photoInput" />
+                            </div>
+                        </div>
+
                         <!-- Personal Information -->
                         <div class="section-header mb-3">
                             <h5 class="text-primary fw-bold">Personal Information</h5>
@@ -101,4 +120,18 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('photoInput').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var preview = document.getElementById('photoPreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }

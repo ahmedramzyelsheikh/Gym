@@ -2,8 +2,10 @@ using GYM.BLL.Services.Classes;
 using GYM.BLL.Services.Interfaces;
 using GYM.DAL.Data.DataSeeder;
 using GYM.DAL.Data.GymDbContext;
+using GYM.DAL.Data.Models;
 using GYM.DAL.Repositories.Classes;
 using GYM.DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,6 +16,16 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<GYMDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<GYMDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
 
 
 //builder.Services.AddScoped<IPlanRepository, planRepository>();
@@ -29,6 +41,8 @@ builder.Services.AddScoped<IPlanServices, PlanService>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
 
@@ -42,6 +56,11 @@ using (var scope = app.Services.CreateScope())
     var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("DataSeeder");
     var seedFilesPath = Path.Combine(app.Environment.WebRootPath, "Files");
     await DataSeeder.SeedAsync(context, seedFilesPath, logger);
+    
+    // Seed Identity
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await DataSeederIdentity.SeedRolesAndAdminAsync(userManager, roleManager);
 }
 
 // Configure the HTTP request pipeline.
@@ -55,6 +74,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
