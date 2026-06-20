@@ -1,68 +1,71 @@
 using GYM.BLL.ViewModels;
 using GYM.DAL.Repositories.Classes;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GYM.PL.Controllers
 {
     public class MemberController : Controller
     {
-
-        readonly IMemberService _member;
-        public MemberController(IMemberService _member)
+        private readonly IMemberService _member;
+        
+        public MemberController(IMemberService member)
         {
-            this._member = _member; 
+            _member = member; 
         }
+
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var  result = await  _member.GetAllMembersAsync(ct);
-            return View(result);
+            var result = await _member.GetAllMembersAsync(ct);
+            return View(result.Data);
         }
+
         [HttpGet]
         public async Task<IActionResult> Create(CancellationToken ct) => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create( CreateMemberViewModel member, CancellationToken ct)
+        public async Task<IActionResult> Create(CreateMemberViewModel member, CancellationToken ct)
         {
             if(ModelState.IsValid)
             {
-                await _member.CreateMemberAsynce(member, ct); 
-                return RedirectToAction("Index");
+                var result = await _member.CreateMemberAsynce(member, ct); 
+                if (result.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
 
             return View(member); 
-                
         }
 
         public async Task<IActionResult> Details(int id, CancellationToken ct)
         {
             var result = await _member.GetMemberAsync(id, ct);
-            if (result is null) return RedirectToAction("Index");
+            if (!result.IsSuccess) return RedirectToAction("Index");
 
-            return View(result);
+            return View(result.Data);
         }
 
         public async Task<IActionResult> HealthRecordDetails(int id, CancellationToken ct)
         {
             var result = await _member.GetDetailsHealthRecord(id, ct);
-            if (result is null) 
-            {
-                result = new HealthRecordViewModel { Note = "No Health Record Found." };
-            }
+            var model = result.IsSuccess ? result.Data : new HealthRecordViewModel { Note = result.ErrorMessage };
 
-           
             TempData["Message"] = "Successfully loaded Health Record for the member.";
             ViewBag.Status = "Active";
 
-            return View(result);
+            return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id, CancellationToken ct)
         {
             var result = await _member.GetMemberToEditAsync(id, ct);
-            if (result is null) return RedirectToAction("Index");
+            if (!result.IsSuccess) return RedirectToAction("Index");
 
-            return View(result);
+            return View(result.Data);
         }
 
         [HttpPost]
@@ -70,8 +73,12 @@ namespace GYM.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _member.UpdateMemberAsync(member, ct);
-                return RedirectToAction("Index");
+                var result = await _member.UpdateMemberAsync(member, ct);
+                if (result.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
 
             return View(member);

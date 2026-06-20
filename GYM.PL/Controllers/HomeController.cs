@@ -19,8 +19,8 @@ namespace GYM.Controllers
 
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var model = await _analyticsService.GetDashboardAnalyticsAsync(ct);
-            return View(model);
+            var result = await _analyticsService.GetDashboardAnalyticsAsync(ct);
+            return View(result.Data);
         }
 
         public IActionResult Privacy()

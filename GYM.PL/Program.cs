@@ -1,5 +1,6 @@
 using GYM.BLL.Services.Classes;
 using GYM.BLL.Services.Interfaces;
+using GYM.DAL.Data.DataSeeder;
 using GYM.DAL.Data.GymDbContext;
 using GYM.DAL.Repositories.Classes;
 using GYM.DAL.Repositories.Interfaces;
@@ -29,8 +30,19 @@ builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 
+builder.Services.AddAutoMapper(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
+
 
 var app = builder.Build();
+
+// Seed the database with plans from JSON file
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<GYMDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("DataSeeder");
+    var seedFilesPath = Path.Combine(app.Environment.WebRootPath, "Files");
+    await DataSeeder.SeedAsync(context, seedFilesPath, logger);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

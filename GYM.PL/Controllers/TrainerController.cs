@@ -6,71 +6,67 @@ namespace GYM.PL.Controllers
 {
     public class TrainerController : Controller
     {
+        private readonly ITrainerService _trainers;
 
-        readonly ITrainerService _trainers;
-        public TrainerController(ITrainerService _trainers)
+        public TrainerController(ITrainerService trainers)
         {
-            this._trainers = _trainers;
+            _trainers = trainers;
         }
+
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-
-            var  result  =  await  _trainers.GetAllTrainersAsync(ct); 
-            return View(result);
+            var result = await _trainers.GetAllTrainersAsync(ct); 
+            return View(result.Data);
         }
+
         [HttpGet]
+        public async Task<IActionResult> Create(CancellationToken ct) => View(new CreateTrainerViewModel());
 
-        public async Task<IActionResult> Create(CancellationToken ct) => View( new CreateTrainerViewModel());
         [HttpPost]
-
-        public   async  Task<IActionResult> CreateTrainer(CreateTrainerViewModel createTrainerViewModel ,CancellationToken ct)
+        public async Task<IActionResult> CreateTrainer(CreateTrainerViewModel createTrainerViewModel, CancellationToken ct)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-               await  _trainers.AddTrainer(createTrainerViewModel, ct);
+                var result = await _trainers.AddTrainer(createTrainerViewModel, ct);
+                if (result.IsSuccess) return RedirectToAction("Index");
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
-
             return RedirectToAction("Index"); 
         }
-        public  async  Task<IActionResult> Details(int id , CancellationToken ct)
+
+        public async Task<IActionResult> Details(int id, CancellationToken ct)
         {
-            var result  = await _trainers.Details(id, ct);
-
-            if (result is null) return RedirectToAction("Index");
-
-            return View(result);
+            var result = await _trainers.Details(id, ct);
+            if (!result.IsSuccess) return RedirectToAction("Index");
+            return View(result.Data);
         }
+
         public async Task<IActionResult> Delete(int id, CancellationToken ct = default) => View();
     
-        public  async  Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct = default)
+        public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct = default)
         {
-
-            await  _trainers.Delete(id, ct); 
-
+            await _trainers.Delete(id, ct); 
             return RedirectToAction("Index");
         }
+
         [HttpGet]
-        public  async Task<IActionResult> Edit(int id  ,  CancellationToken  ct =  default)
+        public async Task<IActionResult> Edit(int id, CancellationToken ct = default)
         {
             var result = await _trainers.GetTrainerToEdit(id, ct);
-            if (result is null) return RedirectToAction("Index");
-
-
-            return View(result); 
-
-
+            if (!result.IsSuccess) return RedirectToAction("Index");
+            return View(result.Data); 
         }
-        [HttpPost]
-        public  async  Task<IActionResult> EditConfirmed(EditTrainerViewModel updatetrainer  ,  CancellationToken  ct)
-        {
-            if(ModelState.IsValid)
-            {
-               await   _trainers.EditCompete(updatetrainer);  
-            }
 
+        [HttpPost]
+        public async Task<IActionResult> EditConfirmed(EditTrainerViewModel updatetrainer, CancellationToken ct)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _trainers.EditCompete(updatetrainer, ct);
+                if (result.IsSuccess) return RedirectToAction("Index");
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
+            }
             return RedirectToAction("Index"); 
         }
-       
-          
     }
 }
