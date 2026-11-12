@@ -1,4 +1,4 @@
-using GYM.BLL.Services.Interfaces;
+using GYM.BLL.Services.Interfaces.Trainers;
 using GYM.BLL.ViewModels.Trainers;
 using Microsoft.AspNetCore.Mvc;
 

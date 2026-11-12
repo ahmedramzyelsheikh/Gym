@@ -1,7 +1,7 @@
 using GYM.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using GYM.BLL.Services.Interfaces;
+using GYM.BLL.Services.Interfaces.Analytics;
 using System.Threading;
 using System.Threading.Tasks;
 

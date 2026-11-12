@@ -1,4 +1,4 @@
-using GYM.BLL.Services.Interfaces;
+using GYM.BLL.Services.Interfaces.Sessions;
 using GYM.BLL.ViewModels.Sessions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,4 +1,4 @@
-using GYM.BLL.Services.Interfaces;
+using GYM.BLL.Services.Interfaces.Memberships;
 using GYM.BLL.ViewModels.Memberships;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

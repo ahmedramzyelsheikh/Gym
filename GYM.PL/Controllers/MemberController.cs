@@ -1,4 +1,4 @@
-using GYM.BLL.Services.Interfaces;
+using GYM.BLL.Services.Interfaces.Members;
 using GYM.BLL.ViewModels.Members;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;

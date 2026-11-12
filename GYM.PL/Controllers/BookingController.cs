@@ -1,4 +1,4 @@
-using GYM.BLL.Services.Interfaces;
+using GYM.BLL.Services.Interfaces.Bookings;
 using GYM.BLL.ViewModels.Bookings;
 using GYM.BLL.ViewModels.Sessions;
 using Microsoft.AspNetCore.Mvc;

@@ -207,10 +207,13 @@ Gym_Project/
 │
 ├── GYM.BLL/                        # ⚙️ Business Logic Layer
 │   ├── Common/                     # Result / Result<T>
-│   ├── Mapping/                    # One AutoMapper profile per feature
+│   ├── Mapping/                    # One AutoMapper profile per feature folder
+│   │   └── Bookings/  Members/  Memberships/  Plans/  Sessions/  Trainers/  Common/
 │   ├── Services/
-│   │   ├── Interfaces/             # One interface per file (IMemberService, ...)
-│   │   ├── Classes/                # One service per file (MemberService, ...)
+│   │   ├── Interfaces/             # IMemberService, ... (one folder + namespace per feature)
+│   │   ├── Classes/                # MemberService, ...  (one folder + namespace per feature)
+│   │   │   └── Account/  Analytics/  Attachments/  Bookings/  Members/
+│   │   │       Memberships/  Plans/  Sessions/  Trainers/
 │   │   └── Helpers/                # Shared helpers
 │   └── ViewModels/                 # One class per file, one namespace per folder
 │       └── Account/  Analytics/  Bookings/  Members/  Memberships/  Plans/  Sessions/  Trainers/

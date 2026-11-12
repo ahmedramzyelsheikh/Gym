@@ -1,4 +1,4 @@
-using GYM.BLL.Services.Interfaces;
+using GYM.BLL.Services.Interfaces.Plans;
 using GYM.BLL.ViewModels.Plans;
 using Microsoft.AspNetCore.Mvc;
 
