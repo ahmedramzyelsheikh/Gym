@@ -287,6 +287,7 @@
             <p class="login-subtitle">Welcome back! Please login to your account</p>
 
             <form asp-action="Login" asp-controller="Account" method="post" id="loginForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                 @Html.ValidationMessage("InvalidLogin", new { @class = "text-danger" })
 
                 <div class="form-floating">

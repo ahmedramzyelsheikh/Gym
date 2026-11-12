@@ -57,18 +57,18 @@
                                     <strong>@Model.DateOfBirth</strong>
                                 </div>
                             </div>
-                            @if (Model.Name != null)
+                            @if (Model.MembershipStartDate != null)
                             {
                                 <div class="col-6">
                                     <div class="p-3 bg-light rounded">
                                         <small class="text-muted d-block mb-1">Membership Start Date</small>
-                                        <strong></strong>
+                                        <strong>@Model.MembershipStartDate</strong>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="p-3 bg-light rounded">
                                         <small class="text-muted d-block mb-1">Membership End Date</small>
-                                        <strong></strong>
+                                        <strong>@Model.MembershipEndDate</strong>
                                     </div>
                                 </div>
                             }

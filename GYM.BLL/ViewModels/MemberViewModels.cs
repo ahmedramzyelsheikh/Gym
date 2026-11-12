@@ -14,6 +14,10 @@ namespace GYM.BLL.ViewModels
         public string Gender { get; set; } = string.Empty;
         public string DateOfBirth { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
+
+        // Filled on the details page when the member has an active membership.
+        public string? MembershipStartDate { get; set; }
+        public string? MembershipEndDate { get; set; }
     }
 
     public class HealthRecordViewModel

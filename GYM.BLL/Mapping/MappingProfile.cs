@@ -12,7 +12,10 @@ namespace GYM.BLL.Mapping
             CreateMap<Member, MemberView>()
                 .ForMember(d => d.Gender, o => o.MapFrom(s => s.Gender.ToString()))
                 .ForMember(d => d.DateOfBirth, o => o.MapFrom(s => s.DateOfBirth.ToString("dd MMM yyyy")))
-                .ForMember(d => d.Address, o => o.MapFrom(s => FormatAddress(s.Address)));
+                .ForMember(d => d.Address, o => o.MapFrom(s => FormatAddress(s.Address)))
+                // Filled by MemberService from the active membership.
+                .ForMember(d => d.MembershipStartDate, o => o.Ignore())
+                .ForMember(d => d.MembershipEndDate, o => o.Ignore());
 
             CreateMap<CreateMemberViewModel, Member>()
                 .ForMember(d => d.Id, o => o.Ignore())

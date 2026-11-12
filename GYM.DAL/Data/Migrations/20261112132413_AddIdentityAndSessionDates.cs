@@ -13,15 +13,12 @@ namespace GYM.DAL.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Plans",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Plans",
-                keyColumn: "Id",
-                keyValue: 2);
+            // The old HasData plans (Id 1, 2) are replaced by plans.json.
+            // Only remove them when no membership uses them: the FK cascades and would delete memberships.
+            migrationBuilder.Sql(@"
+DELETE FROM Plans
+WHERE Id IN (1, 2)
+  AND NOT EXISTS (SELECT 1 FROM Memberships m WHERE m.PlanId = Plans.Id);");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "StartDate",

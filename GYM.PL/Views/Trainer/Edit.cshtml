@@ -19,6 +19,7 @@
                         <h4 class="mb-0 text-black">@Model.Name</h4>
                     </div>
                     <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                         <input hidden asp-for="Id" />
                         <input hidden asp-for="Name" />
                         <input hidden asp-for="Photo" />

@@ -34,9 +34,21 @@ namespace GYM.BLL.Services.Classes
         public async Task<Result<MemberView>> GetMemberAsync(int id, CancellationToken ct = default)
         {
             var member = await _uow.Repository<Member>().Query().FirstOrDefaultAsync(m => m.Id == id, ct);
-            return member is null
-                ? Result<MemberView>.Failure("Member not found.")
-                : Result<MemberView>.Success(_mapper.Map<MemberView>(member));
+            if (member is null) return Result<MemberView>.Failure("Member not found.");
+
+            var view = _mapper.Map<MemberView>(member);
+
+            var now = DateTime.Now;
+            var active = await _uow.Repository<Membership>().Query()
+                .Where(m => m.MemberId == id && m.EndDate > now)
+                .FirstOrDefaultAsync(ct);
+            if (active is not null)
+            {
+                view.MembershipStartDate = active.CreateAt.ToString("dd MMM yyyy");
+                view.MembershipEndDate = active.EndDate.ToString("dd MMM yyyy");
+            }
+
+            return Result<MemberView>.Success(view);
         }
 
         public async Task<Result> CreateMemberAsynce(CreateMemberViewModel model, CancellationToken ct = default)

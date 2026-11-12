@@ -49,7 +49,7 @@ namespace GYM.PL.Controllers
                     TempData["SuccessMessage"] = "Session created successfully!";
                     return RedirectToAction(nameof(Index));
                 }
-                TempData["ErrorMessage"] = result.ErrorMessage;
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
             await PopulateDropDownsAsync(ct);
             return View(model);
@@ -59,7 +59,11 @@ namespace GYM.PL.Controllers
         public async Task<IActionResult> Edit(int id, CancellationToken ct)
         {
             var result = await _sessionService.GetSessionToEditAsync(id, ct);
-            if (!result.IsSuccess) return NotFound();
+            if (!result.IsSuccess)
+            {
+                TempData["ErrorMessage"] = result.ErrorMessage;
+                return RedirectToAction(nameof(Index));
+            }
 
             await PopulateDropDownsAsync(ct);
             return View(result.Data);
@@ -77,7 +81,7 @@ namespace GYM.PL.Controllers
                     TempData["SuccessMessage"] = "Session updated successfully!";
                     return RedirectToAction(nameof(Index));
                 }
-                TempData["ErrorMessage"] = result.ErrorMessage;
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
             await PopulateDropDownsAsync(ct);
             return View(model);
@@ -99,6 +103,10 @@ namespace GYM.PL.Controllers
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Session deleted successfully!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = result.ErrorMessage;
             }
             return RedirectToAction(nameof(Index));
         }
