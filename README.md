@@ -193,7 +193,7 @@ erDiagram
 ## 📂 Project Structure
 
 ```
-Gym_Project/
+Gym/
 ├── GYM.PL.slnx                     # Solution file
 │
 ├── GYM.PL/                         # 🎨 Presentation Layer
@@ -242,8 +242,8 @@ Gym_Project/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ahmedramzyelsheikh/Gym_Project.git
-   cd Gym_Project
+   git clone https://github.com/ahmedramzyelsheikh/Gym.git
+   cd Gym
    ```
 
 2. **Configure the database connection** in `GYM.PL/appsettings.json`
