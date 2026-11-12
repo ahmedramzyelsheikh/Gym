@@ -1,5 +1,5 @@
+using GYM.BLL.Services.Interfaces;
 using GYM.BLL.ViewModels;
-using GYM.DAL.Repositories.Classes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
@@ -89,7 +89,9 @@ namespace GYM.PL.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
         {
-            await _member.DeleteMemberAsync(id, ct);
+            var result = await _member.DeleteMemberAsync(id, ct);
+            if (result.IsSuccess) TempData["SuccessMessage"] = "Member deleted successfully.";
+            else TempData["ErrorMessage"] = result.ErrorMessage;
             return RedirectToAction("Index");
         }
     }

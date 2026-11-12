@@ -29,28 +29,7 @@ namespace GYM.DAL.Data.Configurations
                 t.HasCheckConstraint("PlanDurationCheck", "DurationDays Between 1 and 365");
             });
 
-            builder.HasData(
-            new Plan
-            {
-                Id = 1,
-                Name = "Basic",
-                Description = "Standard access",
-                DurationDays = 30,
-                Price = 150.00m,
-                IsActive = true,
-                CreateAt = new DateTime(2026, 5, 14) 
-            },
-            new Plan
-            {
-                Id = 2,
-                Name = "Premium",
-                Description = "Full access",
-                DurationDays = 90,
-                Price = 400.00m,
-                IsActive = true,
-                CreateAt = new DateTime(2026, 5, 14)
-            }
-        );
+            // Plans are seeded at startup from wwwroot/Files/plans.json (see DataSeeder).
         }
     }
 }

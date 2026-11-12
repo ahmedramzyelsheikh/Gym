@@ -9,7 +9,7 @@ namespace GYM.DAL.Data.Models
     {
      
 
-        public Specialties Specialtiy { get; set; } = default!; 
+        public Specialties Specialtiy { get; set; } = default!;
         public ICollection<Session>? Sessions { get; set;}
  
 

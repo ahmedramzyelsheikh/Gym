@@ -18,6 +18,9 @@ namespace GYM.DAL.Data.Models
         public Gender Gender { get; set; } = default!;
 
         public Address Address { get; set; } = default!;
+
+        // Photo file name stored under wwwroot/Files/Images/Members or /Trainers.
+        public string? Photo { get; set; }
     }
     [NotMapped]
      public  class  Address 

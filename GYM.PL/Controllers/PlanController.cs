@@ -66,7 +66,19 @@ namespace GYM.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
         {
-            await _planServices.DeletePlan(id, ct);
+            var result = await _planServices.DeletePlan(id, ct);
+            if (result.IsSuccess) TempData["SuccessMessage"] = "Plan deleted successfully.";
+            else TempData["ErrorMessage"] = result.ErrorMessage;
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Activate(int id, CancellationToken ct)
+        {
+            var result = await _planServices.ToggleActivationAsync(id, ct);
+            if (result.IsSuccess) TempData["SuccessMessage"] = "Plan status updated.";
+            else TempData["ErrorMessage"] = result.ErrorMessage;
             return RedirectToAction("Index");
         }
     }

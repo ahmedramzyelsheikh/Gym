@@ -1,0 +1,17 @@
+# Build output
+bin/
+obj/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Uploaded photos created while running the app locally
+# (the sample photos already in the repo stay tracked)
+GYM.PL/wwwroot/Files/Images/Members/*
+GYM.PL/wwwroot/Files/Images/Trainers/*
+!GYM.PL/wwwroot/Files/Images/Members/*.png
+!GYM.PL/wwwroot/Files/Images/Trainers/*.png

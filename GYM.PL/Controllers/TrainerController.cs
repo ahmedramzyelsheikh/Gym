@@ -32,7 +32,7 @@ namespace GYM.PL.Controllers
                 if (result.IsSuccess) return RedirectToAction("Index");
                 ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
-            return RedirectToAction("Index"); 
+            return View(createTrainerViewModel);
         }
 
         public async Task<IActionResult> Details(int id, CancellationToken ct)
@@ -46,7 +46,9 @@ namespace GYM.PL.Controllers
     
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct = default)
         {
-            await _trainers.Delete(id, ct); 
+            var result = await _trainers.Delete(id, ct);
+            if (result.IsSuccess) TempData["SuccessMessage"] = "Trainer deleted successfully.";
+            else TempData["ErrorMessage"] = result.ErrorMessage;
             return RedirectToAction("Index");
         }
 
@@ -68,7 +70,7 @@ namespace GYM.PL.Controllers
                 if (result.IsSuccess) return RedirectToAction("Index");
                 ModelState.AddModelError(string.Empty, result.ErrorMessage);
             }
-            return RedirectToAction("Index"); 
+            return View(updatetrainer);
         }
     }
 }

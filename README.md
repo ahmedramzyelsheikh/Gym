@@ -244,17 +244,26 @@ Gym_Project/
    }
    ```
 
-3. **Apply the migrations**
-   ```bash
-   dotnet ef database update --project GYM.DAL --startup-project GYM.PL
-   ```
-
-4. **Run the app**
+3. **Run the app**
    ```bash
    dotnet run --project GYM.PL
    ```
 
-On first run, the app automatically seeds the **membership plans** from `wwwroot/Files/plans.json` and creates the **Identity roles and admin account**.
+On first run, the app automatically:
+
+- applies all EF Core **migrations** (creates the database if it doesn't exist)
+- seeds the session **categories** and the **membership plans** from `wwwroot/Files/plans.json`
+- creates the **Identity roles** (`Admin`, `Receptionist`) and a default admin account
+
+### 🔑 Default login
+
+| Email | Password |
+|---|---|
+| `admin@gym.com` | `Admin@123` |
+
+> ⚠️ Change this password before using the app anywhere other than your own machine.
+
+> ℹ️ The project uses **AutoMapper 16**, which asks for a license key. It works without one and only logs a warning. A free community license is available at [automapper.io](https://automapper.io).
 
 ---
 

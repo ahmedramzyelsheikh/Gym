@@ -10,7 +10,7 @@ namespace GYM.DAL.Data.Models
     {
         public string Description { get; set; } = default!;
         public int Capacity { get; set; }
-        //public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
         public ICollection<Booking> bookings { get; set; } = default!;
@@ -18,7 +18,7 @@ namespace GYM.DAL.Data.Models
         public int TrainerId { get; set; }
         public Trainer Trainer { get; set; } = default!;
 
-        public int CategoryId;
+        public int CategoryId { get; set; }
 
         public Category Category { get; set; } = default!;
      }

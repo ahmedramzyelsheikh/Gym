@@ -12,5 +12,8 @@ namespace GYM.DAL.Data.Models
 
         public  int PlanId { get; set; }
         public Plan Plan { get; set; } = default!;
+
+        // Start date is CreateAt (mapped to the "Start Date" column).
+        public DateTime EndDate { get; set; }
     }
 }
