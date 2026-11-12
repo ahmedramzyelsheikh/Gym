@@ -1,5 +1,6 @@
 using AutoMapper;
 using GYM.BLL.Common;
+using GYM.BLL.Services.Helpers;
 using GYM.BLL.Services.Interfaces;
 using GYM.BLL.ViewModels;
 using GYM.DAL.Data.Models;

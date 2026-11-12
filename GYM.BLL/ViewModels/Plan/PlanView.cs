@@ -22,25 +22,4 @@ namespace GYM.BLL.ViewModels
         [Display(Name = "Active")]
         public bool IsActive { get; set; } = true;
     }
-
-    public class MemberShipViewModel
-    {
-        public int Id { get; set; }
-        public int MemberId { get; set; }
-        public string MemberName { get; set; } = string.Empty;
-        public string PlanName { get; set; } = string.Empty;
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-    }
-
-    public class CreateMemberShipViewModel
-    {
-        [Required, Range(1, int.MaxValue, ErrorMessage = "Please select a member.")]
-        [Display(Name = "Member")]
-        public int MemberId { get; set; }
-
-        [Required, Range(1, int.MaxValue, ErrorMessage = "Please select a plan.")]
-        [Display(Name = "Plan")]
-        public int PlanId { get; set; }
-    }
 }

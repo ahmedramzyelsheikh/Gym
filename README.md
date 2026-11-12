@@ -206,8 +206,14 @@ Gym_Project/
 │   └── appsettings.json            # Connection string
 │
 ├── GYM.BLL/                        # ⚙️ Business Logic Layer
-│   ├── Services/                   # Interfaces + implementations
-│   └── ViewModels/                 # Data shapes for the views
+│   ├── Common/                     # Result / Result<T>
+│   ├── Mapping/                    # One AutoMapper profile per feature
+│   ├── Services/
+│   │   ├── Interfaces/             # One interface per file (IMemberService, ...)
+│   │   ├── Classes/                # One service per file (MemberService, ...)
+│   │   └── Helpers/                # Shared helpers
+│   └── ViewModels/                 # One class per file, grouped by feature
+│       └── Account/  Analytics/  Booking/  Member/  Membership/  Plan/  Session/  Trainer/
 │
 └── GYM.DAL/                        # 🗄️ Data Access Layer
     ├── Data/
