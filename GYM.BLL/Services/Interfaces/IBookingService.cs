@@ -1,5 +1,7 @@
 using GYM.BLL.Common;
-using GYM.BLL.ViewModels;
+using GYM.BLL.ViewModels.Bookings;
+using GYM.BLL.ViewModels.Members;
+using GYM.BLL.ViewModels.Sessions;
 
 namespace GYM.BLL.Services.Interfaces
 {

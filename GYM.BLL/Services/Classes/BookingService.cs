@@ -1,7 +1,9 @@
 using AutoMapper;
 using GYM.BLL.Common;
 using GYM.BLL.Services.Interfaces;
-using GYM.BLL.ViewModels;
+using GYM.BLL.ViewModels.Bookings;
+using GYM.BLL.ViewModels.Members;
+using GYM.BLL.ViewModels.Sessions;
 using GYM.DAL.Data.Models;
 using GYM.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;

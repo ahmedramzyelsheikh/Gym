@@ -1,6 +1,6 @@
 using GYM.BLL.Common;
 using GYM.BLL.Services.Interfaces;
-using GYM.BLL.ViewModels;
+using GYM.BLL.ViewModels.Analytics;
 using GYM.DAL.Data.Models;
 using GYM.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;

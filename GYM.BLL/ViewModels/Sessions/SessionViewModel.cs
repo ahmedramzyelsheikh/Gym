@@ -1,4 +1,4 @@
-namespace GYM.BLL.ViewModels
+namespace GYM.BLL.ViewModels.Sessions
 {
     public class SessionViewModel
     {

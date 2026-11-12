@@ -1,5 +1,5 @@
 using GYM.BLL.Services.Interfaces;
-using GYM.BLL.ViewModels;
+using GYM.BLL.ViewModels.Memberships;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading;

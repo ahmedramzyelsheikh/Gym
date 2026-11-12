@@ -1,5 +1,5 @@
 using GYM.BLL.Services.Interfaces;
-using GYM.BLL.ViewModels;
+using GYM.BLL.ViewModels.Trainers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GYM.PL.Controllers

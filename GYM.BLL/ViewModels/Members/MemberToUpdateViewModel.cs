@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using GYM.DAL.Data.Enums;
 using Microsoft.AspNetCore.Http;
 
-namespace GYM.BLL.ViewModels
+namespace GYM.BLL.ViewModels.Members
 {
     public class MemberToUpdateViewModel
     {

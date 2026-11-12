@@ -1,5 +1,5 @@
 using AutoMapper;
-using GYM.BLL.ViewModels;
+using GYM.BLL.ViewModels.Members;
 using GYM.DAL.Data.Models;
 
 namespace GYM.BLL.Mapping

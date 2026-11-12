@@ -1,4 +1,4 @@
-namespace GYM.BLL.ViewModels
+namespace GYM.BLL.ViewModels.Members
 {
     public class MemberView
     {

@@ -212,8 +212,8 @@ Gym_Project/
 │   │   ├── Interfaces/             # One interface per file (IMemberService, ...)
 │   │   ├── Classes/                # One service per file (MemberService, ...)
 │   │   └── Helpers/                # Shared helpers
-│   └── ViewModels/                 # One class per file, grouped by feature
-│       └── Account/  Analytics/  Booking/  Member/  Membership/  Plan/  Session/  Trainer/
+│   └── ViewModels/                 # One class per file, one namespace per folder
+│       └── Account/  Analytics/  Bookings/  Members/  Memberships/  Plans/  Sessions/  Trainers/
 │
 └── GYM.DAL/                        # 🗄️ Data Access Layer
     ├── Data/

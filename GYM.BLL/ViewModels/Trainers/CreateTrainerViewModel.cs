@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using GYM.DAL.Data.Enums;
 using Microsoft.AspNetCore.Http;
 
-namespace GYM.BLL.ViewModels
+namespace GYM.BLL.ViewModels.Trainers
 {
-    public class CreateMemberViewModel
+    public class CreateTrainerViewModel
     {
         [Required, StringLength(50, MinimumLength = 2)]
         public string Name { get; set; } = string.Empty;
@@ -32,10 +32,11 @@ namespace GYM.BLL.ViewModels
         [Required, StringLength(30)]
         public string Street { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Profile photo is required.")]
+        [Required(ErrorMessage = "Specialty is required.")]
+        [Display(Name = "Specialty")]
+        public Specialties? Specialties { get; set; }
+
         [Display(Name = "Profile Photo")]
         public IFormFile? PhotoFile { get; set; }
-
-        public HealthRecordViewModel HealthRecordViewModel { get; set; } = new();
     }
 }

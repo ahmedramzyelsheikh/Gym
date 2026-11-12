@@ -1,5 +1,5 @@
 using GYM.BLL.Common;
-using GYM.BLL.ViewModels;
+using GYM.BLL.ViewModels.Members;
 
 namespace GYM.BLL.Services.Interfaces
 {

@@ -1,4 +1,3 @@
-using GYM.BLL.ViewModels;
 using GYM.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
